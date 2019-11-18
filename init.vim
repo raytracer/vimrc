@@ -8,6 +8,7 @@ nnoremap k gk
 
 
 set clipboard+=unnamedplus
+set clipboard+=unnamed
 set background=light
 set hidden
 set nobackup
@@ -22,6 +23,10 @@ set tabstop     =4
 set softtabstop =4
 set shiftwidth  =4
 set expandtab
+
+"insert cursor in insert mode
+let &t_SI = "\e[6 q"
+let &t_EI = "\e[2 q"
 
 call plug#begin('~/.config/nvim/plugged')
 Plug 'scrooloose/nerdtree'
