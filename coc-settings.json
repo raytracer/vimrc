@@ -2,5 +2,11 @@
     "suggest.autoTrigger": "always",
     "suggest.triggerAfterInsertEnter": true,
     "suggest.timeout": 500,
-    "suggest.noselect": false
+    "suggest.noselect": false,
+    "explorer.width": 30,
+    "explorer.previewAction.onHover": false,
+    "explorer.keyMappings": {
+        "<cr>": ["expandable?", "expandOrCollapse", "open"],
+        "v": "open:vsplit"
+    }
 }

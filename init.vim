@@ -1,11 +1,14 @@
 "Key Bindings
+let mapleader=" "
 inoremap kj <Esc>
-nnoremap <C-e> :NERDTreeToggle<CR>
-nnoremap <C-f> :NERDTreeFind<CR>
 nnoremap <C-p> :FZF<CR>
 nnoremap j gj
 nnoremap k gk
-
+nmap <leader>e :CocCommand explorer<CR>
+nmap <C-e> :CocCommand explorer<CR>
+nmap <F1> :CocCommand java.debug.vimspector.start<CR>
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gr <Plug>(coc-references)
 
 set clipboard+=unnamedplus
 set clipboard+=unnamed
@@ -29,7 +32,6 @@ let &t_SI = "\e[6 q"
 let &t_EI = "\e[2 q"
 
 call plug#begin('~/.config/nvim/plugged')
-Plug 'scrooloose/nerdtree'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'airblade/vim-gitgutter'
@@ -38,19 +40,38 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'romainl/flattened'
-Plug 'https://gitlab.com/Dica-Developer/vim-jdb'
+Plug 'puremourning/vimspector'
+Plug 'skywind3000/vim-quickui'
 "Syntax only
 Plug 'ianks/vim-tsx'
 Plug 'leafgarland/typescript-vim'
+Plug 'Omer/vim-sparql'
 call plug#end()
 
 colorscheme flattened_light
 
-"Airline Config
+"Airline
 let g:airline_theme='solarized'
 
+"Vim Quick-UI
+let content = [
+            \ [ 'Toggle Breakpoint', 'call vimspector#ToggleBreakpoint()' ],
+            \ [ 'Toggle Condidtional Breakpoint', 'echo 200' ],
+            \ [ 'Add Function Breakpoint', "call vimspector#AddFunctionBreakpoint('<cexpr>' )" ],
+            \ [ '-' ],
+            \ [ 'Go to Definition', "execute 'normal \<Plug>(coc-definition)'" ],
+            \ [ 'Go to Type Definition', "execute 'normal \<Plug>(coc-type-definition)'" ],
+            \ [ 'Refactor', "execute 'normal \<Plug>(coc-refactor)'" ],
+            \]
+let opts = {'title': 'select one'}
+
+nmap <leader><leader> :call quickui#context#open(content, opts)<CR>
+
+"Vimspector
+let g:vimspector_enable_mappings = 'VISUAL_STUDIO'
+
 "Completion Config
-let g:coc_global_extensions = ['coc-tsserver', 'coc-java']
+let g:coc_global_extensions = ['coc-tsserver', 'coc-java', 'coc-java-debug', 'coc-explorer']
 " Use tab for trigger completion with characters ahead and navigate.
 " Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
 inoremap <silent><expr> <TAB>
@@ -66,8 +87,6 @@ endfunction
 
 " Use <c-space> to trigger completion.
 inoremap <silent><expr> <c-space> coc#refresh()
-
-nmap <silent> gd <Plug>(coc-definition)
 
 " Use <cr> to confirm completion, `<C-g>u` means break undo chain at current position.
 " Coc only does snippet and additional edit on confirm.
