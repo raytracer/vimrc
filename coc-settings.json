@@ -3,6 +3,7 @@
     "suggest.triggerAfterInsertEnter": true,
     "suggest.timeout": 500,
     "suggest.noselect": false,
+    "explorer.icon.enableNerdfont": true,
     "explorer.width": 30,
     "explorer.previewAction.onHover": false,
     "explorer.keyMappings": {

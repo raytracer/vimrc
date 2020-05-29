@@ -42,6 +42,7 @@ Plug 'junegunn/fzf.vim'
 Plug 'romainl/flattened'
 Plug 'puremourning/vimspector'
 Plug 'skywind3000/vim-quickui'
+Plug 'ChristianChiarulli/codi.vim'
 "Syntax only
 Plug 'ianks/vim-tsx'
 Plug 'leafgarland/typescript-vim'
@@ -52,6 +53,7 @@ colorscheme flattened_light
 
 "Airline
 let g:airline_theme='solarized'
+let g:airline_powerline_fonts = 1
 
 "Vim Quick-UI
 let content = [
