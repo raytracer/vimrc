@@ -45,6 +45,7 @@ Plug 'nvim-telescope/telescope.nvim'
 Plug 'lewis6991/gitsigns.nvim'
 Plug 'ishan9299/nvim-solarized-lua'
 Plug 'shaunsingh/nord.nvim'
+Plug 'mhartington/formatter.nvim'
 "Syntax only
 Plug 'ianks/vim-tsx'
 Plug 'leafgarland/typescript-vim'
@@ -125,6 +126,26 @@ lua <<EOF
   require('lspconfig')['pyright'].setup {
     capabilities = capabilities
   }
+  require('formatter').setup({
+    filetype = {
+      python = {
+        -- Configuration for psf/black
+        function()
+          return {
+            exe = "black", -- this should be available on your $PATH
+            args = { '-' },
+            stdin = true,
+          }
+        end
+      }
+    }
+  })
+  vim.api.nvim_exec([[
+  augroup FormatAutogroup
+      autocmd!
+      autocmd BufWritePost *.py FormatWrite
+  augroup END
+  ]], true)
 EOF
 
 lua require'tab'
