@@ -20,6 +20,8 @@ set softtabstop =4
 set shiftwidth  =4
 set expandtab
 set termguicolors
+set mouse=a
+set shell=/opt/homebrew/bin/fish
 
 "insert cursor in insert mode
 let &t_SI = "\e[6 q"
@@ -44,16 +46,17 @@ Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
 Plug 'lewis6991/gitsigns.nvim'
 Plug 'ishan9299/nvim-solarized-lua'
-Plug 'shaunsingh/nord.nvim'
+Plug 'rmehri01/onenord.nvim', { 'branch': 'main' }
 Plug 'mhartington/formatter.nvim'
+Plug 'pwntester/octo.nvim'
 "Syntax only
 Plug 'ianks/vim-tsx'
 Plug 'leafgarland/typescript-vim'
 Plug 'Omer/vim-sparql'
 call plug#end()
 
+"colorscheme onenord
 "set background=dark
-"colorscheme nord
 set background=light
 colorscheme solarized
 
@@ -152,6 +155,9 @@ lua require'tab'
 
 nnoremap <leader>r <Cmd>lua vim.lsp.buf.rename()<CR>
 
+"GitHub Octo
+lua require'octo'.setup{}
+
 "Languages
 "lua require'lspconfig'.denols.setup{}
 "lua require'lspconfig'.pyright.setup{}
@@ -167,9 +173,9 @@ nnoremap <F5> <Cmd>lua require('jdtls.dap').setup_dap_main_class_configs();requi
 nnoremap <C-p> <Cmd>Telescope find_files<cr>
 nnoremap <leader>rr <Cmd>Telescope live_grep<cr>
 
-"Airline
+"Lualine
 lua require('lualine').setup( {options = {theme = 'solarized_light'}})
-"lua require('lualine').setup({options = {theme = 'nord'}})
+"lua require('lualine').setup({options = {theme = 'onenord'}})
 
 " Gitsigns
 lua require('gitsigns').setup()
