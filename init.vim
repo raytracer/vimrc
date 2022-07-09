@@ -10,14 +10,15 @@ set hidden
 set nobackup
 set nowritebackup
 set number
+set cursorline number
 set updatetime=300
 " don't give |ins-completion-menu| messages.
 set shortmess+=c
 " always show signcolumns
 set signcolumn=yes
-set tabstop     =4
-set softtabstop =4
-set shiftwidth  =4
+set tabstop     =2
+set softtabstop =2
+set shiftwidth  =2
 set expandtab
 set termguicolors
 set mouse=a
@@ -40,20 +41,25 @@ Plug 'rcarriga/nvim-dap-ui'
 Plug 'mfussenegger/nvim-jdtls'
 Plug 'kyazdani42/nvim-web-devicons' " for file icons
 Plug 'kyazdani42/nvim-tree.lua'
+Plug 'tidalcycles/vim-tidal'
 Plug 'neovim/nvim-lspconfig'
 Plug 'nvim-lua/popup.nvim'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
 Plug 'lewis6991/gitsigns.nvim'
-Plug 'ishan9299/nvim-solarized-lua'
+Plug 'shaunsingh/solarized.nvim'
 Plug 'rmehri01/onenord.nvim', { 'branch': 'main' }
 Plug 'mhartington/formatter.nvim'
 Plug 'pwntester/octo.nvim'
+Plug 'github/copilot.vim'
 "Syntax only
 Plug 'ianks/vim-tsx'
 Plug 'leafgarland/typescript-vim'
 Plug 'Omer/vim-sparql'
 call plug#end()
+
+let g:solarized_contrast = v:false
+let g:solarized_borders = v:true
 
 "colorscheme onenord
 "set background=dark
@@ -61,11 +67,13 @@ set background=light
 colorscheme solarized
 
 "Nvim Tree
+if !has("gui_vimr")
+  lua require'nvim-tree'.setup{}
 
-lua require'nvim-tree'.setup{}
+  nnoremap <C-e> :NvimTreeToggle<CR>
+  nnoremap <C-f> :NvimTreeFindFile<CR>
+endif
 
-nnoremap <C-e> :NvimTreeToggle<CR>
-nnoremap <C-f> :NvimTreeFindFile<CR>
 
 "Nvim Comp
 set completeopt=menu,menuone,noselect
@@ -155,6 +163,9 @@ lua require'tab'
 
 nnoremap <leader>r <Cmd>lua vim.lsp.buf.rename()<CR>
 
+"tidalcycles
+let g:tidal_target = "terminal"
+
 "GitHub Octo
 lua require'octo'.setup{}
 
@@ -163,7 +174,7 @@ lua require'octo'.setup{}
 "lua require'lspconfig'.pyright.setup{}
 
 "Nvim jdtls
-nnoremap <leader><leader> <Cmd>lua require('jdtls').code_action()<CR>
+nnoremap <leader><leader> <Cmd>lua vim.lsp.buf.code_action()<CR>
 nnoremap gd <Cmd>lua vim.lsp.buf.definition()<CR>
 nnoremap K <Cmd>lua vim.lsp.buf.hover()<CR>
 nnoremap <leader>b <Cmd>lua require'dap'.toggle_breakpoint()<CR>
@@ -174,7 +185,7 @@ nnoremap <C-p> <Cmd>Telescope find_files<cr>
 nnoremap <leader>rr <Cmd>Telescope live_grep<cr>
 
 "Lualine
-lua require('lualine').setup( {options = {theme = 'solarized_light'}})
+lua require('lualine').setup( {options = {theme = 'solarized'}})
 "lua require('lualine').setup({options = {theme = 'onenord'}})
 
 " Gitsigns
