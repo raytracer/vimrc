@@ -43,6 +43,8 @@ Plug 'kyazdani42/nvim-web-devicons' " for file icons
 Plug 'kyazdani42/nvim-tree.lua'
 Plug 'tidalcycles/vim-tidal'
 Plug 'neovim/nvim-lspconfig'
+Plug 'jose-elias-alvarez/null-ls.nvim'
+Plug 'jose-elias-alvarez/nvim-lsp-ts-utils'
 Plug 'nvim-lua/popup.nvim'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
@@ -51,7 +53,6 @@ Plug 'shaunsingh/solarized.nvim'
 Plug 'rmehri01/onenord.nvim', { 'branch': 'main' }
 Plug 'mhartington/formatter.nvim'
 Plug 'pwntester/octo.nvim'
-Plug 'github/copilot.vim'
 "Syntax only
 Plug 'ianks/vim-tsx'
 Plug 'leafgarland/typescript-vim'
@@ -78,6 +79,9 @@ endif
 "Nvim Comp
 set completeopt=menu,menuone,noselect
 
+inoremap <silent><expr> <TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+
 lua <<EOF
   -- Setup nvim-cmp.
   local cmp = require'cmp'
@@ -102,7 +106,25 @@ lua <<EOF
         c = cmp.mapping.close(),
       }),
       ['<CR>'] = cmp.mapping.confirm({ select = true }),
-    },
+      ['<Tab>'] = cmp.mapping(function(fallback)
+        local col = vim.fn.col('.') - 1
+
+        if cmp.visible() then
+          cmp.select_next_item(select_opts)
+        elseif col == 0 or vim.fn.getline('.'):sub(col, col):match('%s') then
+          fallback()
+        else
+          cmp.complete()
+          end
+          end, {'i', 's'}),
+      ['<S-Tab>'] = cmp.mapping(function(fallback)
+        if cmp.visible() then
+          cmp.select_prev_item(select_opts)
+        else
+          fallback()
+          end
+          end, {'i', 's'}),
+      },
     sources = cmp.config.sources({
       { name = 'nvim_lsp' },
     }, {
@@ -129,11 +151,8 @@ lua <<EOF
   })
 
   -- Setup lspconfig.
-  local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
+  local capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities())
   -- Replace <YOUR_LSP_SERVER> with each lsp server you've enabled.
-  require('lspconfig')['denols'].setup {
-    capabilities = capabilities
-  }
   require('lspconfig')['pyright'].setup {
     capabilities = capabilities
   }
@@ -159,8 +178,6 @@ lua <<EOF
   ]], true)
 EOF
 
-lua require'tab'
-
 nnoremap <leader>r <Cmd>lua vim.lsp.buf.rename()<CR>
 
 "tidalcycles
@@ -170,8 +187,7 @@ let g:tidal_target = "terminal"
 lua require'octo'.setup{}
 
 "Languages
-"lua require'lspconfig'.denols.setup{}
-"lua require'lspconfig'.pyright.setup{}
+lua require'ts'
 
 "Nvim jdtls
 nnoremap <leader><leader> <Cmd>lua vim.lsp.buf.code_action()<CR>
