@@ -43,8 +43,6 @@ Plug 'kyazdani42/nvim-web-devicons' " for file icons
 Plug 'kyazdani42/nvim-tree.lua'
 Plug 'tidalcycles/vim-tidal'
 Plug 'neovim/nvim-lspconfig'
-Plug 'jose-elias-alvarez/null-ls.nvim'
-Plug 'jose-elias-alvarez/nvim-lsp-ts-utils'
 Plug 'nvim-lua/popup.nvim'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
@@ -156,38 +154,21 @@ lua <<EOF
   require('lspconfig')['pyright'].setup {
     capabilities = capabilities
   }
-  require('formatter').setup({
-    filetype = {
-      python = {
-        -- Configuration for psf/black
-        function()
-          return {
-            exe = "black", -- this should be available on your $PATH
-            args = { '-' },
-            stdin = true,
-          }
-        end
-      }
-    }
-  })
-  vim.api.nvim_exec([[
-  augroup FormatAutogroup
-      autocmd!
-      autocmd BufWritePost *.py FormatWrite
-  augroup END
-  ]], true)
+  require('lspconfig')['tsserver'].setup{
+    on_attach = on_attach,
+    flags = lsp_flags,
+  }
 EOF
 
 nnoremap <leader>r <Cmd>lua vim.lsp.buf.rename()<CR>
+
+lua require'lspconfig'.rust_analyzer.setup({})
 
 "tidalcycles
 let g:tidal_target = "terminal"
 
 "GitHub Octo
 lua require'octo'.setup{}
-
-"Languages
-lua require'ts'
 
 "Nvim jdtls
 nnoremap <leader><leader> <Cmd>lua vim.lsp.buf.code_action()<CR>
