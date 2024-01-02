@@ -54,7 +54,6 @@ Plug 'pwntester/octo.nvim'
 "Syntax only
 Plug 'ianks/vim-tsx'
 Plug 'leafgarland/typescript-vim'
-Plug 'Omer/vim-sparql'
 call plug#end()
 
 let g:solarized_contrast = v:false
