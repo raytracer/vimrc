@@ -59,8 +59,6 @@ if !has("gui_vimr")
   nnoremap <C-f> :NvimTreeFindFile<CR>
 endif
 
-lua completion.menu.draw.columns = { { "label", "label_description", gap = 1 }, { "kind_icon", "kind" } }
-
 "Nvim telescope 
 nnoremap <C-p> <Cmd>Telescope find_files<cr>
 nnoremap <leader>rr <Cmd>Telescope live_grep<cr>
