@@ -65,6 +65,9 @@ nnoremap <leader>rr <Cmd>Telescope live_grep<cr>
 
 "Lualine
 lua require('lualine').setup( {options = {theme = 'solarized'}})
+"
+"Lualine
+lua require('blink.cmp').setup({keymap = { preset = 'super-tab' }})
 
 " Gitsigns
 lua require('gitsigns').setup()
