@@ -50,7 +50,6 @@ Plug 'lewis6991/gitsigns.nvim'
 Plug 'shaunsingh/solarized.nvim'
 Plug 'rmehri01/onenord.nvim', { 'branch': 'main' }
 Plug 'mhartington/formatter.nvim'
-Plug 'pwntester/octo.nvim'
 "Syntax only
 Plug 'ianks/vim-tsx'
 Plug 'leafgarland/typescript-vim'
@@ -165,9 +164,6 @@ lua require'lspconfig'.rust_analyzer.setup({})
 
 "tidalcycles
 let g:tidal_target = "terminal"
-
-"GitHub Octo
-lua require'octo'.setup{}
 
 "Nvim jdtls
 nnoremap <leader><leader> <Cmd>lua vim.lsp.buf.code_action()<CR>
