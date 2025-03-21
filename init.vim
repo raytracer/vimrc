@@ -40,6 +40,7 @@ Plug 'nvim-telescope/telescope.nvim'
 Plug 'lewis6991/gitsigns.nvim'
 Plug 'shaunsingh/solarized.nvim'
 Plug 'mhartington/formatter.nvim'
+Plug 'neovim/nvim-lspconfig'
 "Syntax only
 Plug 'ianks/vim-tsx'
 Plug 'leafgarland/typescript-vim'
@@ -71,3 +72,6 @@ lua require('blink.cmp').setup({keymap = { preset = 'super-tab' }})
 
 " Gitsigns
 lua require('gitsigns').setup()
+
+" LSP Config
+lua require'lspconfig'.gopls.setup{}
