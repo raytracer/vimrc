@@ -31,7 +31,9 @@ let &t_EI = "\e[2 q"
 call plug#begin('~/.config/nvim/plugged')
 Plug 'hoob3rt/lualine.nvim'
 Plug 'mfussenegger/nvim-dap'
+Plug 'nvim-neotest/nvim-nio'
 Plug 'rcarriga/nvim-dap-ui'
+Plug 'leoluz/nvim-dap-go'
 Plug 'kyazdani42/nvim-web-devicons' " for file icons
 Plug 'kyazdani42/nvim-tree.lua'
 Plug 'saghen/blink.cmp'
@@ -75,3 +77,6 @@ lua require('gitsigns').setup()
 
 " LSP Config
 lua require'lspconfig'.gopls.setup{}
+
+" Go Dap
+lua require('dap-go').setup()
